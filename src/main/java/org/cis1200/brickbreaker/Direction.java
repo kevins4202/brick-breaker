@@ -9,5 +9,5 @@ package org.cis1200.brickbreaker;
  * possible cases of the input to the enum cases)
  */
 public enum Direction {
-    UP, DOWN, LEFT, RIGHT, GAMEOVER;
+    UP, DOWN, LEFT, RIGHT, FAIL;
 }

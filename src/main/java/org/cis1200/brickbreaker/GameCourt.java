@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -19,16 +20,19 @@ public class GameCourt extends JPanel {
     // the state of the game logic
     private Brick[][] bricks;
     private Player player;
-    private final LinkedList<Ball> balls = new LinkedList<>();
+    private final ArrayList<Ball> balls = new ArrayList<>();
     private final Random rand = new Random();
 
     private boolean playing = false; // whether the game is running
     private final JLabel status; // Current status text, i.e. "Running..."
 
+    private int bricksToDestroy = -1;
+
     // Game constants
     public static final int COURT_WIDTH = 600;
     public static final int COURT_HEIGHT = 400;
-    public static final int PLAYER_VELOCITY = 4;
+    public static final int PLAYER_VELOCITY = 6;
+    public static final int rows = 5;
 
     // Update interval for timer, in milliseconds
     public static final int INTERVAL = 35;
@@ -74,8 +78,8 @@ public class GameCourt extends JPanel {
      * (Re-)set the game to its initial state.
      */
     public void reset() {
-
-        bricks = new Brick[COURT_WIDTH / Brick.WIDTH][5];
+        bricksToDestroy = rows * COURT_WIDTH / Brick.WIDTH;
+        bricks = new Brick[COURT_WIDTH / Brick.WIDTH][rows];
         for (int i = 0; i < bricks.length; i++) {
             for (int j = 0; j < bricks[0].length; j++) {
                 bricks[i][j] = new Brick(
@@ -87,7 +91,10 @@ public class GameCourt extends JPanel {
         }
 
         player = new Player(COURT_WIDTH, COURT_HEIGHT, Color.BLACK);
-        balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW));
+
+        balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 50, 4));
+        balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 350, -4));
+
 
         playing = true;
         status.setText("Running...");
@@ -103,32 +110,54 @@ public class GameCourt extends JPanel {
     void tick() {
         if (playing) {
             // advance the square and snitch in their current direction.
+            if (balls.isEmpty()) {
+                playing = false;
+                status.setText("Game Over");
+            }
+
+            if (bricksToDestroy == 0) {
+                playing = false;
+                status.setText("You Win!");
+            }
+
             player.move();
             for (Ball b : balls)
                 b.move();
 
             // make the snitch bounce off walls...
+            LinkedList<Ball> ballsToRemove = new LinkedList<>();
             for (Ball b : balls) {
                 Direction dir = b.hitWall();
-                if (dir == Direction.GAMEOVER) {
-                    playing = false;
-                    status.setText("Game Over");
+                if (dir == Direction.FAIL) {
+                    ballsToRemove.add(b);
                 } else {
                     b.bounce(dir);
                 }
             }
 
+            for (Ball b: ballsToRemove)
+                balls.remove(b);
+
             for (Ball b : balls)
                 b.bounce(b.hitPlayer(player));
 
+            for (int i = 0; i < balls.size(); i++) {
+                for (int j = i + 1; j < balls.size(); j++) {
+                    Ball b1 = balls.get(i);
+                    Ball b2 = balls.get(j);
 
+                    b1.bounce(b1.hitObj(b2));
+                    b2.bounce(b2.hitObj(b1));
+                }
+            }
 
             for (Ball b : balls)
                 for (Brick[] barr : bricks) {
                     for (Brick brick : barr) {
-                        Direction dir = b.hitBrick(brick);
+                        Direction dir = b.hitObj(brick);
                         if (dir != null) {
                             brick.setShow(false);
+                            bricksToDestroy--;
                         }
                         b.bounce(dir);
                     }
