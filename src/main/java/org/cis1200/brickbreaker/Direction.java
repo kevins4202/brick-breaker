@@ -1,4 +1,4 @@
-package org.cis1200.mushroom;
+package org.cis1200.brickbreaker;
 
 /**
  * This file holds an enumeration called Direction, which is used in
@@ -9,5 +9,5 @@ package org.cis1200.mushroom;
  * possible cases of the input to the enum cases)
  */
 public enum Direction {
-    UP, DOWN, LEFT, RIGHT;
+    UP, DOWN, LEFT, RIGHT, GAMEOVER;
 }

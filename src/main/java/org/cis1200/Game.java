@@ -10,7 +10,7 @@ public class Game {
      */
     public static void main(String[] args) {
         // Set the game you want to run here
-        Runnable game = new org.cis1200.tictactoe.RunTicTacToe();
+        Runnable game = new org.cis1200.brickbreaker.RunBrickBreaker();
 
         SwingUtilities.invokeLater(game);
     }

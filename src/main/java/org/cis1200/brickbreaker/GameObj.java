@@ -1,6 +1,8 @@
-package org.cis1200.mushroom;
+package org.cis1200.brickbreaker;
 
-import java.awt.Graphics;
+import org.cis1200.brickbreaker.Direction;
+
+import java.awt.*;
 
 /**
  * An object in the game.
@@ -215,10 +217,58 @@ public abstract class GameObj {
         if (this.py + this.vy < 0) {
             return Direction.UP;
         } else if (this.py + this.vy > this.maxY) {
-            return Direction.DOWN;
+            return Direction.GAMEOVER;
         } else {
             return null;
         }
+    }
+
+    /**
+     * Determine if the game object will hit the player in the next time step.
+     * If so, return direction of the player in relation to this game object.
+     * 
+     * @return Direction of the impending player
+     */
+    public Direction hitPlayer(GameObj obj) {
+        int up = obj.getPy();
+        int down = obj.getPy() + obj.getHeight();
+        int left = obj.getPx();
+        int right = obj.getPx() + obj.getWidth();
+
+
+        if (this.py + this.height + this.vy > obj.getPy()) {
+            if (this.px + this.vx < right && this.px + this.vx + this.getWidth() > left) {
+                if (this.py + this.height < obj.getPy() + obj.getHeight() / 2) {
+                    return Direction.DOWN;
+                } else if (this.px + this.vx + this.getWidth() > right) {
+                    return Direction.LEFT;
+                } else {
+                    return Direction.RIGHT;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Determine if the game object will hit a brick in the next time step.
+     * If so, return direction of the brick in relation to this game object.
+     * @return Direction of the impending brick
+     */
+    public Direction hitBrick(Brick obj) {
+        if (!obj.getShow()) return null;
+
+        int up = obj.getPy();
+        int down = obj.getPy() + obj.getHeight();
+        int left = obj.getPx();
+        int right = obj.getPx() + obj.getWidth();
+
+        if (this.py + this.height + this.vy < up || this.py + this.vy > down || this.px + this.width + this.vx < left || this.px + this.vx > right) {
+            return null;
+        }
+
+        return Direction.UP;
     }
 
     /**

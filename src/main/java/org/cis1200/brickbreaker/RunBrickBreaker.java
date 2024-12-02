@@ -1,19 +1,14 @@
-package org.cis1200.mushroom;
+package org.cis1200.brickbreaker;
 
-// imports necessary libraries for Java swing
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 
-/**
- * Game Main class that specifies the frame and widgets of the GUI
- */
-public class RunMushroomOfDoom implements Runnable {
+public class RunBrickBreaker implements Runnable {
+    /**
+     *
+     */
+    @Override
     public void run() {
-        // NOTE : recall that the 'final' keyword notes immutability even for
-        // local variables.
-
-        // Top-level frame in which game components live.
-        // Be sure to change "TOP LEVEL FRAME" to the name of your game
         final JFrame frame = new JFrame("TOP LEVEL FRAME");
         frame.setLocation(300, 300);
 
