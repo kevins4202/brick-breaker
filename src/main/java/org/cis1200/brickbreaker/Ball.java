@@ -9,11 +9,11 @@ import java.awt.*;
 public class Ball extends GameObj {
     public static final int SIZE = 20;
     public final int INIT_POS_X;
-    public static final int INIT_POS_Y = 350;
+    public static final int INIT_POS_Y = 325;
     public final int INIT_VEL_X;
-    public static final int INIT_VEL_Y = -4;
+    public static final int INIT_VEL_Y = -7;
 
-    final private Color color;
+    private final Color color;
 
     public Ball(int courtWidth, int courtHeight, Color color, int INIT_POS_X, int INIT_VEL_X) {
         super(INIT_VEL_X, INIT_VEL_Y, INIT_POS_X, INIT_POS_Y, SIZE, SIZE, courtWidth, courtHeight);

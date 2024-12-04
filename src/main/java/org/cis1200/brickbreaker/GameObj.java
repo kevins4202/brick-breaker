@@ -186,9 +186,11 @@ public abstract class GameObj {
         switch (d) {
             case UP:
                 this.vy = Math.abs(this.vy);
+                this.vx = (int) (((double) this.vx / Math.abs(this.vx)) * (Math.random() * 3 + 3));
                 break;
             case DOWN:
                 this.vy = -Math.abs(this.vy);
+                this.vx = (int) (((double) this.vx / Math.abs(this.vx)) * (Math.random() * 3 + 3));
                 break;
             case LEFT:
                 this.vx = Math.abs(this.vx);

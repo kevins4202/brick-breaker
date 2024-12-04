@@ -2,8 +2,11 @@ package org.cis1200.brickbreaker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -21,17 +24,18 @@ public class GameCourt extends JPanel {
     private Brick[][] bricks;
     private Player player;
     private final ArrayList<Ball> balls = new ArrayList<>();
-    private final Random rand = new Random();
 
     private boolean playing = false; // whether the game is running
     private final JLabel status; // Current status text, i.e. "Running..."
+
+    Timer timer;
 
     private int bricksToDestroy = -1;
 
     // Game constants
     public static final int COURT_WIDTH = 600;
     public static final int COURT_HEIGHT = 400;
-    public static final int PLAYER_VELOCITY = 6;
+    public static final int PLAYER_VELOCITY = 10;
     public static final int rows = 5;
 
     // Update interval for timer, in milliseconds
@@ -46,16 +50,18 @@ public class GameCourt extends JPanel {
         // actionPerformed() method is called each time the timer triggers. We
         // define a helper method called tick() that actually does everything
         // that should be done in a single time step.
-        Timer timer = new Timer(INTERVAL, e -> tick());
-        timer.start(); // MAKE SURE TO START THE TIMER!
+        timer = new Timer(INTERVAL, e -> tick());
 
-        // Enable keyboard focus on the court area. When this component has the
-        // keyboard focus, key events are handled by its key listener.
         setFocusable(true);
+        requestFocusInWindow();
 
-        // This key listener allows the square to move as long as an arrow key
-        // is pressed, by changing the square's velocity accordingly. (The tick
-        // method below actually moves the square.)
+        addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                System.out.println("Panel gained focus");
+            }
+        });
+
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -72,35 +78,149 @@ public class GameCourt extends JPanel {
         });
 
         this.status = status;
+//        reset();
+    }
+
+    public boolean getPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     /**
      * (Re-)set the game to its initial state.
      */
-    public void reset() {
+    public void reset(String saved) {
+        playing = true;
+
         bricksToDestroy = rows * COURT_WIDTH / Brick.WIDTH;
-        bricks = new Brick[COURT_WIDTH / Brick.WIDTH][rows];
-        for (int i = 0; i < bricks.length; i++) {
-            for (int j = 0; j < bricks[0].length; j++) {
-                bricks[i][j] = new Brick(
-                        COURT_WIDTH, COURT_HEIGHT,
-                        new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)),
-                        i * Brick.WIDTH, j * Brick.HEIGHT + 50
-                );
+        bricks = new Brick[rows][COURT_WIDTH / Brick.WIDTH];
+
+        balls.clear();
+
+        if (saved != null) {
+            loadGame(saved);
+        } else {
+            for (int i = 0; i < bricks.length; i++) {
+                for (int j = 0; j < bricks[0].length; j++) {
+                    bricks[i][j] = new Brick(
+                            COURT_WIDTH, COURT_HEIGHT,
+                            new Color((int) (Math.random() * 150), (int) (Math.random() * 150), (int) (Math.random() * 150) + 100),
+                            j * Brick.WIDTH, i * Brick.HEIGHT + 50
+                    );
+
+                    if (Math.random() * 5 > 4.5) {
+                        bricks[i][j].setSpawn(true);
+                        bricks[i][j].setColor(new Color(210, 210, 0));
+                    }
+                }
             }
+
+            player = new Player(COURT_WIDTH, COURT_HEIGHT, Color.BLACK);
+
+            balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 50, 5));
+            balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 350, -6));
         }
 
-        player = new Player(COURT_WIDTH, COURT_HEIGHT, Color.BLACK);
-
-        balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 50, 4));
-        balls.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 350, -4));
-
-
-        playing = true;
-        status.setText("Running...");
-
+        status.setText("Destroy blocks. Yellow blocks generate a new ball upon destruction.");
         // Make sure that this component has the keyboard focus
         requestFocusInWindow();
+//        timer = new Timer(INTERVAL, e -> tick());
+        tick();
+        playing = false;
+    }
+
+    public void startGame() {
+        playing = true;
+        timer.start();
+        status.setText("Game Running");
+    }
+
+    public void saveGame() {
+        /*
+            Bricks: color, show, spawn
+            Player: position
+            balls: pos, speed
+         */
+
+        int randomNumber;
+        File file;
+
+        do {
+            // Generate a random number between 10000 and 99999
+            randomNumber = 10000 + (int) (Math.random() * 90000);
+            file = new File("src/main/java/org/cis1200/brickbreaker/saves/"+randomNumber + ".txt");
+        } while (file.exists()); // Repeat until a unique file name is found
+
+
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            // Save Bricks
+            writer.write("Bricks\n");
+            for (Brick[] row : bricks) {
+                for (Brick brick : row) {
+                    writer.write(brick.getColor().getRed() + "," + brick.getColor().getBlue() + "," + brick.getColor().getGreen() + "," + brick.getShow() + "," + brick.getSpawn() + " ");
+                }
+                writer.newLine();
+            }
+
+            // Save Player
+            writer.write("Player\n");
+            writer.write(player.getPx() + "\n");
+
+            // Save Balls
+            writer.write("Balls\n");
+            for (Ball ball : balls) {
+                writer.write(ball.getPx() + "," + ball.getPy() + "," + ball.getVx() + "," + ball.getVy() + " ");
+            }
+            writer.newLine();
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    public void loadGame(String fileName) {
+        File file = new File(fileName);
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            if ("Bricks".equals(reader.readLine())) {
+                String line;
+                int i = 0;
+                while (!(line = reader.readLine()).equals("Player")) {
+                    String[] bricksData = line.strip().split(" ");
+                    int j = 0;
+                    for (String brickData : bricksData) {
+                        String[] parts = brickData.split(",");
+//                        System.out.println("Brick: Color=" + parts[0] + ", Show=" + parts[1] + ", Spawn=" + parts[2]);
+                        bricks[i][j].setColor(new Color(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2])));
+                        bricks[i][j].setShow(Boolean.parseBoolean(parts[3]));
+                        bricks[i][j].setSpawn(Boolean.parseBoolean(parts[4]));
+                        j++;
+                    }
+                    i++;
+                }
+            }
+
+//            System.out.println("Decoding Player:");
+            String playerData = reader.readLine().strip();
+//            System.out.println("Player: Px=" + playerData[0] + ", Py=" + playerData[1]);
+            player.setPx(Integer.parseInt(playerData));
+//            System.out.println("Decoding Balls:");
+            if ("Balls".equals(reader.readLine())) {
+                String[] ballsData = reader.readLine().split(" ");
+                for (String ballData : ballsData) {
+                    String[] parts = ballData.split(",");
+//                    System.out.println("Ball: Px=" + parts[0] + ", Py=" + parts[1] + ", Vx=" + parts[2] + ", Vy=" + parts[3]);
+                    Ball ball = new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, Integer.parseInt(parts[0]), Integer.parseInt(parts[2]));
+                    ball.setPy(Integer.parseInt(parts[1]));
+                    ball.setVx(Integer.parseInt(parts[3]));
+                    balls.add(ball);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+        }
     }
 
     /**
@@ -109,11 +229,14 @@ public class GameCourt extends JPanel {
      */
     void tick() {
         if (playing) {
+            requestFocusInWindow();
+
             // advance the square and snitch in their current direction.
             if (balls.isEmpty()) {
                 playing = false;
                 status.setText("Game Over");
             }
+
 
             if (bricksToDestroy == 0) {
                 playing = false;
@@ -121,6 +244,7 @@ public class GameCourt extends JPanel {
             }
 
             player.move();
+
             for (Ball b : balls)
                 b.move();
 
@@ -151,6 +275,8 @@ public class GameCourt extends JPanel {
                 }
             }
 
+            LinkedList<Ball> ballsToAdd = new LinkedList<>();
+
             for (Ball b : balls)
                 for (Brick[] barr : bricks) {
                     for (Brick brick : barr) {
@@ -158,10 +284,13 @@ public class GameCourt extends JPanel {
                         if (dir != null) {
                             brick.setShow(false);
                             bricksToDestroy--;
+                            if (brick.isSpawn()) ballsToAdd.add(new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 50, 5));
                         }
                         b.bounce(dir);
                     }
                 }
+
+            balls.addAll(ballsToAdd);
 
             // update the display
             repaint();
@@ -171,6 +300,10 @@ public class GameCourt extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        System.out.println(player.getPx());
+        System.out.println(player.getPy());
+        System.out.println(player.getVx());
+        System.out.println(player.getVy());
         player.draw(g);
         for (Ball b : balls)
             b.draw(g);

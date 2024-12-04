@@ -14,8 +14,9 @@ public class Brick extends GameObj {
     public static final int INIT_VEL_X = 0;
     public static final int INIT_VEL_Y = 0;
     private boolean show = true;
+    private boolean spawn = false;
 
-    private final Color color;
+    private Color color;
 
     /**
      * Note that, because we don't need to do anything special when constructing
@@ -45,5 +46,25 @@ public class Brick extends GameObj {
 
     public boolean getShow() {
         return show;
+    }
+
+    public boolean isSpawn() {
+        return spawn;
+    }
+
+    public void setSpawn(boolean spawn) {
+        this.spawn = spawn;
+    }
+
+    public boolean getSpawn() {
+        return spawn;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
