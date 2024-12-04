@@ -2,11 +2,10 @@ package org.cis1200.brickbreaker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class RunBrickBreaker implements Runnable {
-    /**
-     *
-     */
+    private GameCourt court;
 
     @Override
     public void run() {
@@ -20,7 +19,7 @@ public class RunBrickBreaker implements Runnable {
         status_panel.add(status);
 
         // Main playing area
-        final GameCourt court = new GameCourt(status);
+        court = new GameCourt(status);
         frame.add(court, BorderLayout.CENTER);
 
         // Reset button
@@ -40,11 +39,11 @@ public class RunBrickBreaker implements Runnable {
             if (start.getText().equals("Start")) {
                 start.setText("Pause");
                 court.startGame();
-                court.setPlaying(true);
+                court.setPlaying(GameState.PLAYING);
                 status.setText("Running...");
             } else {
                 start.setText("Start");
-                court.setPlaying(false);
+                court.setPlaying(GameState.STOPPED);
                 status.setText("Paused...");
             }
         });
@@ -56,15 +55,28 @@ public class RunBrickBreaker implements Runnable {
         });
         control_panel.add(saveGameButton);
 
+        final JButton loadGameButton = getLoadGameButton();
+        control_panel.add(loadGameButton);
+
 //        // Timer to check the game state and update the Save Game button
         Timer gameStateChecker = new Timer(100, e -> {
-            boolean playing = court.getPlaying(); // Replace with your actual GameCourt method
+            GameState playing = court.getPlaying(); // Replace with your actual GameCourt method
 
-            if (!playing) {
-                start.setText("Start");
-                saveGameButton.setVisible(true);
+            if (playing.equals(GameState.RESET)) {
+                loadGameButton.setVisible(true);
             } else {
+                loadGameButton.setVisible(false);
+            }
+
+            if (playing.equals(GameState.STOPPED) || playing.equals(GameState.RESET)) {
+                start.setText("Start");
+                start.setVisible(true);
+                saveGameButton.setVisible(true);
+            } else if (playing.equals(GameState.PLAYING)) {
                 start.setText("Pause");
+                saveGameButton.setVisible(false);
+            } else {
+                start.setVisible(false);
                 saveGameButton.setVisible(false);
             }
 //            if (playing && !saveGameButton.isVisible()) {
@@ -75,8 +87,8 @@ public class RunBrickBreaker implements Runnable {
             control_panel.revalidate(); // Refresh the layout
             control_panel.repaint();   // Redraw the panel
 
-            System.out.println(court.getPlaying());
-            System.out.println("\r");
+//            System.out.println(court.getPlaying());
+//            System.out.println("\r");
         });
         gameStateChecker.start();
 
@@ -86,5 +98,47 @@ public class RunBrickBreaker implements Runnable {
         frame.setVisible(true);
 
         court.reset(null);
+        System.out.println("Brick Breaker run");
     }
+
+    private JButton getLoadGameButton() {
+        final JButton loadGameButton = new JButton("Load Game");
+        loadGameButton.addActionListener(e -> {
+            String fileName = JOptionPane.showInputDialog(
+                    null,
+                    "Enter the Save Number to load:",
+                    "Load Game",
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (fileName != null && !fileName.trim().isEmpty()) {
+                if (isValidFileName("src/main/java/org/cis1200/brickbreaker/saves/" + fileName + ".txt")) { // Assuming a validation method
+                    court.reset("src/main/java/org/cis1200/brickbreaker/saves/" + fileName + ".txt");
+                } else {
+                    // Display error message for invalid file name
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "The save number is invalid. Please try again.",
+                            "Invalid Save Number",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            } else {
+                // Handle the case where the user cancels or enters an empty name
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No file name entered.",
+                        "Error",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+        });
+        return loadGameButton;
+    }
+
+    private boolean isValidFileName(String fileName) {
+        File file = new File(fileName);
+        return file.exists() && !file.isDirectory();
+    }
+
 }
