@@ -6,9 +6,9 @@ import java.awt.*;
  * A basic game object starting in the upper left corner of the game court. It
  * is displayed as a square of a specified color.
  */
-public class Brick extends GameObj {
+public abstract class Brick extends GameObj {
     public static final int HEIGHT = 20;
-    public static final int WIDTH = 100;
+    public static final int WIDTH = 60;
     public final int INIT_POS_X;
     public final int INIT_POS_Y;
     public static final int INIT_VEL_X = 0;
@@ -66,5 +66,9 @@ public class Brick extends GameObj {
 
     public Color getColor() {
         return color;
+    }
+
+    public void move() {
+
     }
 }

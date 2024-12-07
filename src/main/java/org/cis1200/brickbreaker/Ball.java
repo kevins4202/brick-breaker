@@ -11,7 +11,7 @@ public class Ball extends GameObj {
     public final int INIT_POS_X;
     public static final int INIT_POS_Y = 325;
     public final int INIT_VEL_X;
-    public static final int INIT_VEL_Y = -7;
+    public static final int INIT_VEL_Y = -8;
 
     private final Color color;
 

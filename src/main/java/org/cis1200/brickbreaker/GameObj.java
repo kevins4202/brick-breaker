@@ -84,6 +84,14 @@ public abstract class GameObj {
         return this.height;
     }
 
+    public int getMaxX() {
+        return this.maxX;
+    }
+
+    public int getMaxY() {
+        return this.maxY;
+    }
+
     // **************************************************************************
     // * SETTERS
     // **************************************************************************
