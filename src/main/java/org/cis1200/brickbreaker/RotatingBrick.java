@@ -24,8 +24,9 @@ public class RotatingBrick extends Brick {
     }
 
     public void move() {
-        if (!super.getShow())
+        if (!super.getShow()) {
             return;
+        }
         angle = (angle + 5) % 360;
         super.setPx(270 + (int) (50 * Math.cos(Math.toRadians(angle))));
         super.setPy(90 + (int) (50 * Math.sin(Math.toRadians(angle))));

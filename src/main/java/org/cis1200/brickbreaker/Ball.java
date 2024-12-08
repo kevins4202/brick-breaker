@@ -8,18 +8,26 @@ import java.awt.*;
  */
 public class Ball extends GameObj {
     public static final int SIZE = 20;
-    public final int INIT_POS_X;
-    public static final int INIT_POS_Y = 325;
-    public final int INIT_VEL_X;
+    private final int initPosX;
+    private static final int INIT_POS_Y = 325;
+    private final int initVelX;
     public static final int INIT_VEL_Y = -8;
 
     private final Color color;
 
-    public Ball(int courtWidth, int courtHeight, Color color, int INIT_POS_X, int INIT_VEL_X) {
-        super(INIT_VEL_X, INIT_VEL_Y, INIT_POS_X, INIT_POS_Y, SIZE, SIZE, courtWidth, courtHeight);
-        this.INIT_VEL_X = INIT_VEL_X;
-        this.INIT_POS_X = INIT_POS_X;
+    public Ball(int courtWidth, int courtHeight, Color color, int initPosX, int initVelX) {
+        super(initVelX, INIT_VEL_Y, initPosX, INIT_POS_Y, SIZE, SIZE, courtWidth, courtHeight);
+        this.initVelX = initVelX;
+        this.initPosX = initPosX;
         this.color = color;
+    }
+
+    public int getInitPosX() {
+        return initPosX;
+    }
+
+    public int getInitVelX() {
+        return initVelX;
     }
 
     @Override

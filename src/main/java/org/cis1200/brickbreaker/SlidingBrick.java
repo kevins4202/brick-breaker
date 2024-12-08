@@ -20,8 +20,9 @@ public class SlidingBrick extends Brick {
     }
 
     public void move() {
-        if (!super.getShow())
+        if (!super.getShow()) {
             return;
+        }
         int currX = super.getPx();
         if (currX + super.getVx() >= super.getMaxX() ||
                 currX + super.getVx() <= 0) {

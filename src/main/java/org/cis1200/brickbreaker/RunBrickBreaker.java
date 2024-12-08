@@ -60,7 +60,11 @@ public class RunBrickBreaker implements Runnable {
 
         JOptionPane.showMessageDialog(
                 null, // Use null instead of popup
-                "Brickbreaker:\nUse your paddle (arrow keys) to bounce the balls against the blocks to destroy them.\n Destroy all blocks to win. Each block gives one point.\nYellow blocks spawn another ball on destruction. \nBalls disappear if they go past your paddle, and if you run out of balls you will lose.",
+                "Brickbreaker:\nUse your paddle (arrow keys) to bounce the balls against " +
+                        "the blocks to destroy them.\nDestroy all blocks to win. Each block " +
+                        "gives one point.\nYellow blocks spawn another ball on" +
+                "destruction.\nBalls disappear if they go past your paddle, and if you run " +
+                        "out of balls you will lose.",
                 "Instructions", // Added a title to the dialog
                 JOptionPane.INFORMATION_MESSAGE
         );

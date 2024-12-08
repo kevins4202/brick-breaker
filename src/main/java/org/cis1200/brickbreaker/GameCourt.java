@@ -33,7 +33,7 @@ public class GameCourt extends JPanel {
     public static final int COURT_WIDTH = 600;
     public static final int COURT_HEIGHT = 400;
     public static final int PLAYER_VELOCITY = 10;
-    public static final int rows = 5;
+    public static final int ROWS = 5;
 
     // Update interval for timer, in milliseconds
     public static final int INTERVAL = 35;
@@ -85,8 +85,8 @@ public class GameCourt extends JPanel {
     public void reset(String saved) {
         playing = GameState.PLAYING;
 
-        bricksToDestroy = rows * (COURT_WIDTH / Brick.WIDTH - 4) + 3;
-        bricks = new Brick[rows + 2][COURT_WIDTH / Brick.WIDTH];
+        bricksToDestroy = ROWS * (COURT_WIDTH / Brick.WIDTH - 4) + 3;
+        bricks = new Brick[ROWS + 2][COURT_WIDTH / Brick.WIDTH];
 
         System.out.println("cleaer balls");
         balls.clear();
@@ -119,7 +119,7 @@ public class GameCourt extends JPanel {
 
             for (int i = 1; i < bricks[0].length; i++) {
                 bricks[0][i].setShow(false);
-                bricks[rows + 1][i].setShow(false);
+                bricks[ROWS + 1][i].setShow(false);
             }
 
             bricks[0][0] = new SlidingBrick(
@@ -130,13 +130,13 @@ public class GameCourt extends JPanel {
                     ),
                     0, 30, 4
             );
-            bricks[rows + 1][0] = new SlidingBrick(
+            bricks[ROWS + 1][0] = new SlidingBrick(
                     COURT_WIDTH, COURT_HEIGHT,
                     new Color(
                             (int) (Math.random() * 150), (int) (Math.random() * 150),
                             (int) (Math.random() * 150) + 100
                     ),
-                    0, 30 + (rows + 1) * Brick.HEIGHT, 4
+                    0, 30 + (ROWS + 1) * Brick.HEIGHT, 4
             );
 
             bricks[0][1] = new RotatingBrick(
@@ -246,12 +246,12 @@ public class GameCourt extends JPanel {
                         );
                         // System.out.println(c);
 
-                        if (j == 0 && (i == 0 || i == rows + 1))
+                        if (j == 0 && (i == 0 || i == ROWS + 1)) {
                             bricks[i][j] = new SlidingBrick(
                                     COURT_WIDTH, COURT_HEIGHT, c, 0, i * Brick.HEIGHT + 30,
                                     Integer.parseInt(parts[5])
                             );
-                        else {
+                        } else {
                             bricks[i][j] = new StandardBrick(
                                     COURT_WIDTH, COURT_HEIGHT, c, j * Brick.WIDTH,
                                     i * Brick.HEIGHT + 30
@@ -334,8 +334,9 @@ public class GameCourt extends JPanel {
 
             player.move();
 
-            for (Ball b : balls)
+            for (Ball b : balls) {
                 b.move();
+            }
 
             for (Brick[] row : bricks) {
                 for (Brick b : row) {
@@ -354,12 +355,12 @@ public class GameCourt extends JPanel {
                 }
             }
 
-            for (Ball b : ballsToRemove)
+            for (Ball b : ballsToRemove) {
                 balls.remove(b);
-
-            for (Ball b : balls)
+            }
+            for (Ball b : balls) {
                 b.bounce(b.hitPlayer(player));
-
+            }
             for (int i = 0; i < balls.size(); i++) {
                 for (int j = i + 1; j < balls.size(); j++) {
                     Ball b1 = balls.get(i);
@@ -372,7 +373,7 @@ public class GameCourt extends JPanel {
 
             LinkedList<Ball> ballsToAdd = new LinkedList<>();
 
-            for (Ball b : balls)
+            for (Ball b : balls) {
                 for (Brick[] barr : bricks) {
                     for (Brick brick : barr) {
                         Direction dir = b.hitObj(brick);
@@ -380,19 +381,21 @@ public class GameCourt extends JPanel {
                             brick.setShow(false);
                             bricksToDestroy--;
                             System.out.println(bricksToDestroy);
-                            if (brick.isSpawn())
+                            if (brick.isSpawn()) {
                                 ballsToAdd.add(
                                         new Ball(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW, 50, 5)
                                 );
+                            }
                         }
                         b.bounce(dir);
                     }
                 }
+            }
 
             balls.addAll(ballsToAdd);
-            if (!ballsToAdd.isEmpty())
+            if (!ballsToAdd.isEmpty()) {
                 System.out.println("break add ball");
-
+            }
             // update the display
             repaint();
         }
@@ -402,8 +405,10 @@ public class GameCourt extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         player.draw(g);
-        for (Ball b : balls)
+        for (Ball b : balls) {
             b.draw(g);
+        }
+
         for (Brick[] row : bricks) {
             for (Brick brick : row) {
                 brick.draw(g);

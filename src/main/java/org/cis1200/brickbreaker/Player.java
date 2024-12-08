@@ -9,8 +9,8 @@ import java.awt.*;
 public class Player extends GameObj {
     public static final int HEIGHT = 10;
     public static final int WIDTH = 70;
-    public static int INIT_POS_X = 300;
-    public static int INIT_POS_Y = 350;
+    public static final int INIT_POS_X = 300;
+    public static final int INIT_POS_Y = 350;
     public static final int INIT_VEL_X = 0;
     public static final int INIT_VEL_Y = 0;
 

@@ -1,7 +1,5 @@
 package org.cis1200.brickbreaker;
 
-import org.cis1200.brickbreaker.Direction;
-
 import java.awt.*;
 
 /**
@@ -269,8 +267,9 @@ public abstract class GameObj {
      */
     public Direction hitObj(GameObj obj) {
         if (obj instanceof Brick) {
-            if (!((Brick) obj).getShow())
+            if (!((Brick) obj).getShow()) {
                 return null;
+            }
         }
 
         int up = obj.getPy();
