@@ -246,7 +246,6 @@ public abstract class GameObj {
         int left = obj.getPx();
         int right = obj.getPx() + obj.getWidth();
 
-
         if (this.py + this.height + this.vy > obj.getPy()) {
             if (this.px + this.vx < right && this.px + this.vx + this.getWidth() > left) {
                 if (this.py + this.height < obj.getPy() + obj.getHeight() / 2) {
@@ -265,11 +264,13 @@ public abstract class GameObj {
     /**
      * Determine if the game object will hit a brick in the next time step.
      * If so, return direction of the brick in relation to this game object.
+     * 
      * @return Direction of the impending brick
      */
     public Direction hitObj(GameObj obj) {
         if (obj instanceof Brick) {
-            if (!((Brick) obj).getShow()) return null;
+            if (!((Brick) obj).getShow())
+                return null;
         }
 
         int up = obj.getPy();
@@ -277,7 +278,8 @@ public abstract class GameObj {
         int left = obj.getPx();
         int right = obj.getPx() + obj.getWidth();
 
-        if (this.py + this.height + this.vy < up || this.py + this.vy > down || this.px + this.width + this.vx < left || this.px + this.vx > right) {
+        if (this.py + this.height + this.vy < up || this.py + this.vy > down
+                || this.px + this.width + this.vx < left || this.px + this.vx > right) {
             return null;
         }
 

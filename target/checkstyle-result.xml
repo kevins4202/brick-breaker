@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.2.1">
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/GameCourt.java">
+<error line="36" column="29" severity="warning" message="Name &apos;rows&apos; must match pattern &apos;^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck"/>
+<error line="249" column="25" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="333" column="13" severity="warning" message="&apos;for&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="353" column="13" severity="warning" message="&apos;for&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="356" column="13" severity="warning" message="&apos;for&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="371" column="13" severity="warning" message="&apos;for&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="379" column="29" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="389" column="13" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<error line="401" column="9" severity="warning" message="&apos;for&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/GameObj.java">
+<error line="3" column="1" severity="warning" message="Redundant import from the same package - org.cis1200.brickbreaker.Direction." source="com.puppycrawl.tools.checkstyle.checks.imports.RedundantImportCheck"/>
+<error line="272" column="13" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/SlidingBrick.java">
+<error line="23" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/StandardBrick.java">
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/Player.java">
+<error line="12" column="23" severity="warning" message="Name &apos;INIT_POS_X&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.StaticVariableNameCheck"/>
+<error line="12" column="23" severity="warning" message="Variable &apos;INIT_POS_X&apos; must be private and have accessor methods." source="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck"/>
+<error line="13" column="23" severity="warning" message="Name &apos;INIT_POS_Y&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.StaticVariableNameCheck"/>
+<error line="13" column="23" severity="warning" message="Variable &apos;INIT_POS_Y&apos; must be private and have accessor methods." source="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/RotatingBrick.java">
+<error line="27" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/RunBrickBreaker.java">
+<error line="72" severity="warning" message="Line is longer than 100 characters (found 314)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/Ball.java">
+<error line="11" column="22" severity="warning" message="Name &apos;INIT_POS_X&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck"/>
+<error line="11" column="22" severity="warning" message="Variable &apos;INIT_POS_X&apos; must be private and have accessor methods." source="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck"/>
+<error line="13" column="22" severity="warning" message="Name &apos;INIT_VEL_X&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck"/>
+<error line="13" column="22" severity="warning" message="Variable &apos;INIT_VEL_X&apos; must be private and have accessor methods." source="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck"/>
+<error line="18" column="67" severity="warning" message="Name &apos;INIT_POS_X&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheck"/>
+<error line="18" column="83" severity="warning" message="Name &apos;INIT_VEL_X&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/Brick.java">
+<error line="12" column="22" severity="warning" message="Name &apos;INIT_POS_X&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck"/>
+<error line="12" column="22" severity="warning" message="Variable &apos;INIT_POS_X&apos; must be private and have accessor methods." source="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck"/>
+<error line="13" column="22" severity="warning" message="Name &apos;INIT_POS_Y&apos; must match pattern &apos;^[a-z][a-zA-Z0-9]*$&apos;." source="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck"/>
+<error line="13" column="22" severity="warning" message="Variable &apos;INIT_POS_Y&apos; must be private and have accessor methods." source="com.puppycrawl.tools.checkstyle.checks.design.VisibilityModifierCheck"/>
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/GameState.java">
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/brickbreaker/Direction.java">
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/main/java/org/cis1200/Game.java">
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/test/java/org/cis1200/CompilationTest.java">
+</file>
+<file name="/Users/kevinsong/Documents/programming/penn/cis1200/hw09/src/test/java/org/cis1200/brickbreaker/BrickBreakerTest.java">
+</file>
+</checkstyle>

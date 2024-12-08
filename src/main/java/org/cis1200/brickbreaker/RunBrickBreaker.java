@@ -40,7 +40,7 @@ public class RunBrickBreaker implements Runnable {
                 start.setText("Pause");
                 court.startGame();
                 court.setPlaying(GameState.PLAYING);
-                status.setText("Running...");
+                status.setText("Running... Bricks left: " + court.getBricksToDestroy());
             } else {
                 start.setText("Start");
                 court.setPlaying(GameState.STOPPED);
@@ -58,7 +58,14 @@ public class RunBrickBreaker implements Runnable {
         final JButton loadGameButton = getLoadGameButton();
         control_panel.add(loadGameButton);
 
-//        // Timer to check the game state and update the Save Game button
+        JOptionPane.showMessageDialog(
+                null, // Use null instead of popup
+                "Brickbreaker:\nUse your paddle (arrow keys) to bounce the balls against the blocks to destroy them.\n Destroy all blocks to win. Each block gives one point.\nYellow blocks spawn another ball on destruction. \nBalls disappear if they go past your paddle, and if you run out of balls you will lose.",
+                "Instructions", // Added a title to the dialog
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        // // Timer to check the game state and update the Save Game button
         Timer gameStateChecker = new Timer(100, e -> {
             GameState playing = court.getPlaying(); // Replace with your actual GameCourt method
 
@@ -75,20 +82,21 @@ public class RunBrickBreaker implements Runnable {
             } else if (playing.equals(GameState.PLAYING)) {
                 start.setText("Pause");
                 saveGameButton.setVisible(false);
+                status.setText("Running... Bricks left: " + court.getBricksToDestroy());
             } else {
                 start.setVisible(false);
                 saveGameButton.setVisible(false);
             }
-//            if (playing && !saveGameButton.isVisible()) {
-//                saveGameButton.setVisible(true); // Show the button
-//            } else if (!playing && saveGameButton.isVisible()) {
-//                saveGameButton.setVisible(false); // Hide the button
-//            }
+            // if (playing && !saveGameButton.isVisible()) {
+            // saveGameButton.setVisible(true); // Show the button
+            // } else if (!playing && saveGameButton.isVisible()) {
+            // saveGameButton.setVisible(false); // Hide the button
+            // }
             control_panel.revalidate(); // Refresh the layout
-            control_panel.repaint();   // Redraw the panel
+            control_panel.repaint(); // Redraw the panel
 
-//            System.out.println(court.getPlaying());
-//            System.out.println("\r");
+            // System.out.println(court.getPlaying());
+            // System.out.println("\r");
         });
         gameStateChecker.start();
 
@@ -112,8 +120,12 @@ public class RunBrickBreaker implements Runnable {
             );
 
             if (fileName != null && !fileName.trim().isEmpty()) {
-                if (isValidFileName("src/main/java/org/cis1200/brickbreaker/saves/" + fileName + ".txt")) { // Assuming a validation method
-                    court.reset("src/main/java/org/cis1200/brickbreaker/saves/" + fileName + ".txt");
+                if (isValidFileName(
+                        "src/main/java/org/cis1200/brickbreaker/saves/" + fileName + ".txt"
+                )) { // Assuming a validation method
+                    court.reset(
+                            "src/main/java/org/cis1200/brickbreaker/saves/" + fileName + ".txt"
+                    );
                 } else {
                     // Display error message for invalid file name
                     JOptionPane.showMessageDialog(
