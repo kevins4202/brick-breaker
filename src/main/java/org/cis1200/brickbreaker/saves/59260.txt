@@ -5,8 +5,7 @@ Bricks
 61,45,134,true,false,0 210,210,0,true,true,0 130,1,127,true,false,0 106,62,230,false,false,0 14,29,100,false,false,0 106,102,130,false,false,0 31,132,131,false,false,0 210,210,0,true,true,0 144,98,144,true,false,0 127,23,180,true,false,0 
 87,136,216,true,false,0 47,93,206,true,false,0 18,3,208,true,false,0 133,122,217,false,false,0 210,210,0,false,true,0 101,16,186,false,false,0 3,70,200,false,false,0 20,0,203,true,false,0 70,83,236,true,false,0 50,142,203,true,false,0 
 22,26,219,true,false,0 40,133,161,true,false,0 131,89,210,true,false,0 34,18,181,false,false,0 53,68,102,false,false,0 73,19,101,false,false,0 61,76,138,false,false,0 97,61,100,false,false,0 62,52,171,true,false,0 70,86,186,true,false,0 
-89,138,105,false,false,4 10,14,121,false,false,0 32,22,104,false,false,0 100,88,164,false,false,0 21,57,233,false,false,0 74,71,172,false,false,0 21,60,203,false,false,0 50,58,100,false,false,0 210,210,0,false,true,0 131,106,107,false,false,0 
-116,147,231,true,false,100.0
+89,138,105,false,false,4 10,14,121,false,false,0 32,22,104,false,false,0 100,88,164,false,false,0 21,57,233,false,false,0 74,71,172,false,false,0 21,60,203,false,false,0 50,58,100,false,false,0 210,210,0,false,true,0 131,106,107,false,false,0
 Player
 150
 Balls

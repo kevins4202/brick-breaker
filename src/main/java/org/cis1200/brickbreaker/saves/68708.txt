@@ -1,0 +1,14 @@
+Bricks
+47,82,102,false,false,4 82,115,109,false,false,0 17,53,155,false,false,0 55,40,129,false,false,0 82,52,232,false,false,0 114,85,152,false,false,0 127,65,188,false,false,0 210,210,0,false,true,0 102,51,112,false,false,0 124,0,139,false,false,0 
+75,139,111,true,false,0 18,116,110,true,false,0 56,140,248,false,false,0 14,40,229,false,false,0 52,116,246,false,false,0 17,148,113,false,false,0 56,116,143,false,false,0 114,89,155,false,false,0 55,95,148,false,false,0 26,115,106,true,false,0 
+149,7,204,true,false,0 75,55,179,false,false,0 16,101,135,false,false,0 137,125,235,false,false,0 10,138,221,false,false,0 7,122,135,false,false,0 210,210,0,false,true,0 133,56,199,false,false,0 136,147,160,false,false,0 64,64,120,false,false,0 
+134,118,209,false,false,0 91,20,160,false,false,0 120,44,170,false,false,0 56,68,201,false,false,0 81,88,199,false,false,0 137,5,243,false,false,0 77,71,195,false,false,0 48,29,111,false,false,0 111,123,149,false,false,0 42,100,226,false,false,0 
+47,44,160,false,false,0 210,210,0,false,true,0 70,56,141,false,false,0 74,31,235,false,false,0 5,57,204,false,false,0 32,19,121,false,false,0 28,149,165,false,false,0 31,46,119,false,false,0 92,65,142,false,false,0 134,77,203,false,false,0 
+93,38,156,false,false,0 145,52,129,false,false,0 107,78,177,false,false,0 89,28,186,false,false,0 116,111,119,false,false,0 1,98,132,false,false,0 118,130,229,false,false,0 47,92,185,false,false,0 112,23,116,false,false,0 86,20,127,false,false,0 
+85,10,199,false,false,4 70,130,152,false,false,0 120,93,194,false,false,0 6,126,200,false,false,0 8,20,207,false,false,0 63,84,132,false,false,0 29,127,169,false,false,0 70,142,119,false,false,0 66,97,187,false,false,0 106,74,210,false,false,0 
+82,115,109,false,false,125.0
+Player
+460
+Balls
+379,109,-4,-8 
+4

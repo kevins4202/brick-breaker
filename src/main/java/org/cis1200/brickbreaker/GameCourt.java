@@ -306,6 +306,14 @@ public class GameCourt extends JPanel {
             bricksToDestroy = Integer.parseInt(line);
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error reading the file",
+                    "Could not read the file",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            reset(null);
         }
     }
 
